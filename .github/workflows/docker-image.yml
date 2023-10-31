@@ -53,3 +53,10 @@ jobs:
     # End AppMap CI language agent installation
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag cloud-cost-inspector:$(date +%s)
+    # Begin AppMap bootstrap archive step
+    - name: Archive AppMaps
+      id: appmap-bootstrap-archive-appmaps
+      uses: getappmap/archive-action@v1
+      with:
+        revision: ${{ github.event.pull_request.base.sha }}
+    # End AppMap bootstrap archive step
