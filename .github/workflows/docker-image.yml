@@ -35,6 +35,19 @@ jobs:
     - name: Build with Gradle
       uses: gradle/gradle-build-action@0d13054264b0bb894ded474f08ebb30921341cee
       with:
-        arguments: build    
+        arguments: build
+    # Begin AppMap CI language agent installation.
+    # This snippet can be safely removed once the AppMap language agent has been
+    # added to the project dependencies, and appmap.yml has been created.
+    - name: Install AppMap tools
+      id: install-appmap
+      uses: getappmap/install-action@v1
+      with:
+        project-type: gradle
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: "ci: Add AppMap language agent and appmap.yml"
+    # End AppMap CI language agent installation
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag cloud-cost-inspector:$(date +%s)
